@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>STUDY MANTRA | Premium Learning Hub</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', 'Poppins', sans-serif;
+      background: #f0f4fa;
+      min-height: 100vh;
+    }
+
+    /* ---------- SPLASH SCREEN (INTRO) ---------- */
+    .splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, #0A2E3F, #02111A);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      transition: opacity 0.6s ease-out, visibility 0.6s;
+    }
+
+    .splash.hide {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .splash-content {
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      animation: fadeUp 0.9s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+
+    .splash-content h1 {
+      font-size: 3.2rem;
+      letter-spacing: 2px;
+      font-weight: 800;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      margin-bottom: 0.75rem;
+      background: linear-gradient(135deg, #FFF8E7, #FFE6B0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .splash-content .admin {
+      font-size: 1.3rem;
+      font-weight: 500;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+      display: inline-block;
+      padding: 0.5rem 1.3rem;
+      border-radius: 60px;
+      margin-top: 0.8rem;
+      border: 1px solid rgba(255,215,150,0.4);
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(20px);}
+      100% { opacity: 1; transform: translateY(0);}
+    }
+
+    /* ---------- HOME PAGE – SINGLE COLUMN VERTICAL LAYOUT (thumbnail on top, class name below) ---------- */
+    .home-page {
+      display: none;
+      max-width: 600px;
+      margin: 0 auto;
+      min-height: 100vh;
+      background: #F8FCFF;
+      flex-direction: column;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.02), 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    /* —— VIP HEADER —— */
+    .vip-header {
+      background: linear-gradient(112deg, #132c3c 0%, #1f4e6e 100%);
+      padding: 36px 24px 32px;
+      text-align: center;
+      border-bottom-left-radius: 32px;
+      border-bottom-right-radius: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+    .vip-header::after {
+      content: "★";
+      font-size: 120px;
+      position: absolute;
+      bottom: -30px;
+      right: -20px;
+      opacity: 0.08;
+      color: gold;
+      pointer-events: none;
+    }
+    .vip-header h1 {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: -0.3px;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .vip-badge {
+      background: rgba(255,215,0,0.2);
+      backdrop-filter: blur(4px);
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #FFE6A3;
+      letter-spacing: 1px;
+    }
+    .vip-header .tagline {
+      color: rgba(255,255,240,0.85);
+      font-size: 0.9rem;
+      margin-top: 10px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    /* —— SINGLE COLUMN VERTICAL LAYOUT (each card full width) —— */
+    .classes-vertical {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      padding: 32px 20px 40px;
+    }
+
+    .premium-card {
+      background: #FFFFFF;
+      border-radius: 36px;
+      overflow: hidden;
+      box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.12);
+      transition: all 0.25s ease;
+      cursor: pointer;
+      border: 1px solid rgba(210, 225, 240, 0.7);
+      backdrop-filter: blur(2px);
+      width: 100%;
+    }
+    .premium-card:active {
+      transform: scale(0.98);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #EFF3F8;
+      display: block;
+      transition: transform 0.2s ease;
+    }
+    .premium-card:hover .card-thumb {
+      transform: scale(1.01);
+    }
+
+    .card-label {
+      padding: 18px 20px 22px;
+      text-align: center;
+      background: white;
+    }
+    .class-name {
+      font-size: 1.6rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #1F4E6E, #2B6C8F);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.2px;
+    }
+    .class-stream {
+      font-size: 0.75rem;
+      color: #7F95B0;
+      font-weight: 600;
+      margin-top: 6px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+    }
+
+    /* —— PREMIUM FOOTER —— */
+    .vip-footer {
+      background: #FFFFFF;
+      border-top: 2px solid #E9F0F5;
+      padding: 24px 20px 28px;
+      text-align: center;
+      margin-top: auto;
+      box-shadow: 0 -4px 10px rgba(0,0,0,0.02);
+    }
+    .footer-copyright {
+      font-size: 0.75rem;
+      color: #4A627A;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .footer-copyright strong {
+      color: #CD7F32;
+      font-weight: 800;
+    }
+    .footer-extra {
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-bottom: 12px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      color: #6F8FAC;
+    }
+    .footer-extra span {
+      cursor: default;
+    }
+
+    @media (max-width: 500px) {
+      .classes-vertical {
+        gap: 18px;
+        padding: 24px 16px 32px;
+      }
+      .class-name {
+        font-size: 1.35rem;
+      }
+      .vip-header h1 {
+        font-size: 1.8rem;
+      }
+      .vip-header {
+        padding: 28px 20px 24px;
+      }
+      .card-label {
+        padding: 14px 16px 18px;
+      }
+    }
+
+    /* ---------- FULLSCREEN IFRAME + BACK BUTTON (unchanged & robust) ---------- */
+    .iframe-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      z-index: 4000;
+      display: none;
+      flex-direction: column;
+    }
+    .iframe-box {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: white;
+    }
+    .back-btn-overlay {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      z-index: 4100;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      border: none;
+      padding: 10px 18px;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      font-family: inherit;
+    }
+    .back-btn-overlay:active {
+      background: rgba(0,0,0,0.9);
+      transform: scale(0.96);
+    }
+    .back-btn-overlay::before {
+      content: "←";
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    @media (max-width: 500px) {
+      .back-btn-overlay {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+        top: 14px;
+        left: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SPLASH INTRO: APP NAME + ADMIN AKASH SINGH -->
+  <div id="splashScreen" class="splash">
+    <div class="splash-content">
+      <h1>📖 STUDY MANTRA</h1>
+      <div class="admin">👨‍🏫 ADMIN :AKASH SINGH</div>
+      <div style="margin-top: 24px; font-size: 0.8rem; opacity: 0.75;">✨ The VIP Learning Experience</div>
+    </div>
+  </div>
+
+  <!-- HOME PAGE : Single Column Vertical Layout (Thumbnail on top, class name below) -->
+  <div id="homePage" class="home-page">
+    <div class="vip-header">
+      <h1>STUDY MANTRA<span class="vip-badge">✦ ELITE ✦</span></h1>
+      <div class="tagline">📚 Choose your class | Interactive Smart Content</div>
+    </div>
+
+    <!-- VERTICAL CONTAINER : each card = thumbnail above, class name below, full width -->
+    <div class="classes-vertical" id="verticalClassContainer">
+      <!-- Class 8 -->
+      <div class="premium-card" data-url="https://studybeepro.in/nexttopperr/content.html?id=177">
+        <img class="card-thumb" src="https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/uploads/courses/thumbnail/3124628_125_Nirbhay%20Batch%20Class%208th%20App%20Banners09-01.jpg" alt="Class 8 Thumbnail" loading="lazy">
+        <div class="card-label">
+          <div class="class-name">CLASS 8</div>
+          <div class="class-stream">Nirbhay Batch · Foundation</div>
+        </div>
+      </div>
+      <!-- Class 9 -->
+      <div class="premium-card" data-url="https://studybeepro.in/nexttopperr/content.html?id=179">
+        <img class="card-thumb" src="https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/uploads/courses/thumbnail/2788484_125_aarambh%20plus%202027%20class%209th%20banner%20app.png" alt="Class 9 Thumbnail" loading="lazy">
+        <div class="card-label">
+          <div class="class-name">CLASS 9</div>
+          <div class="class-stream">Aarambh Plus 2027</div>
+        </div>
+      </div>
+      <!-- Class 10 -->
+      <div class="premium-card" data-url="https://studybeepro.in/nexttopperr/content.html?id=176">
+        <img class="card-thumb" src="https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/uploads/courses/thumbnail/4628574_125_aarambh%20banner%20app%202026%202.jpg" alt="Class 10 Thumbnail" loading="lazy">
+        <div class="card-label">
+          <div class="class-name">CLASS 10</div>
+          <div class="class-stream">Aarambh 2026 · Boards</div>
+        </div>
+      </div>
+      <!-- Class 11 Science -->
+      <div class="premium-card" data-url="https://studybeepro.in/nexttopperr/content.html?id=112">
+        <img class="card-thumb" src="https://dylnd2lqy6eys.cloudfront.net/1770981347/admin_v2/uploads/courses/thumbnail/1046248_125_Science_Plus_Prarambh_Batch_Class_11th_App_Banners.jpg" alt="Class 11 Science Thumbnail" loading="lazy">
+        <div class="card-label">
+          <div class="class-name">CLASS 11 · SCIENCE</div>
+          <div class="class-stream">Prarambh · Science Plus</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESSIONAL VIP FOOTER -->
+    <div class="vip-footer">
+      <div class="footer-extra">
+        <span>🌟 24/7 Access</span>
+        <span>✨✨</span>
+        <span>☎️ akashkumarsinghbth@gmail.com</span>
+      </div>
+      <div class="footer-copyright">
+        COPYRIGHT ©️ <strong>AKASH SINGH 2026</strong> | All ambitions served
+      </div>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN IFRAME MODAL (same back button & fullscreen) -->
+  <div id="iframeContainer" class="iframe-overlay">
+    <button id="backBtnFromIframe" class="back-btn-overlay"> Back</button>
+    <iframe id="studyIframe" class="iframe-box" title="Class Study Material" sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-modals allow-downloads allow-top-navigation-by-user-activation allow-popups-to-escape-sandbox"></iframe>
+  </div>
+
+  <script>
+    (function(){
+      // DOM elements
+      const splash = document.getElementById('splashScreen');
+      const homePage = document.getElementById('homePage');
+      const iframeContainer = document.getElementById('iframeContainer');
+      const studyIframe = document.getElementById('studyIframe');
+      const backBtn = document.getElementById('backBtnFromIframe');
+      const classCards = document.querySelectorAll('.premium-card'); // vertical cards
+
+      // Helper: hide iframe, show home page with clean state
+      function showHomeAndHideIframe() {
+        studyIframe.src = 'about:blank';   // stop any loading content
+        iframeContainer.style.display = 'none';
+        homePage.style.display = 'flex';    // home uses flex column
+        document.body.style.overflow = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Helper: display fullscreen iframe with target url (study material)
+      function showFullscreenIframe(url) {
+        if (!url) return;
+        homePage.style.display = 'none';
+        iframeContainer.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        studyIframe.src = url;
+        studyIframe.setAttribute('allowfullscreen', 'true');
+        studyIframe.setAttribute('allow', 'autoplay; fullscreen; clipboard-write');
+      }
+
+      // Back button click (top left on iframe)
+      if (backBtn) {
+        backBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          showHomeAndHideIframe();
+        });
+      }
+
+      // Attach click event to every class card (vertical layout)
+      classCards.forEach(card => {
+        card.addEventListener('click', (e) => {
+          const targetUrl = card.getAttribute('data-url');
+          if (targetUrl) {
+            showFullscreenIframe(targetUrl);
+          } else {
+            console.warn("URL missing for class card");
+          }
+        });
+        // Accessibility + keyboard support
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        const classNameElem = card.querySelector('.class-name');
+        const ariaText = classNameElem ? classNameElem.innerText : 'class option';
+        card.setAttribute('aria-label', `Open ${ariaText} study portal`);
+        card.addEventListener('keypress', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            const targetUrl = card.getAttribute('data-url');
+            if (targetUrl) showFullscreenIframe(targetUrl);
+          }
+        });
+      });
+
+      // SPLASH SCREEN: show intro for 2.5 seconds then fade to home
+      function dismissSplashAndShowHome() {
+        splash.classList.add('hide');
+        setTimeout(() => {
+          splash.style.display = 'none';
+          homePage.style.display = 'flex';
+          document.body.style.overflow = '';
+        }, 600);
+      }
+
+      const splashTimer = setTimeout(() => {
+        if (splash && splash.style.display !== 'none') {
+          dismissSplashAndShowHome();
+        }
+      }, 2500);
+
+      // In case DOM already loaded
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          // splash timer is already running
+        });
+      } else {
+        // already parsed, timer active
+      }
+
+      // Initially home is hidden until splash ends
+      homePage.style.display = 'none';
+
+      // Resize guard for iframe fullscreen behavior
+      window.addEventListener('resize', () => {
+        if (iframeContainer.style.display === 'flex') {
+          studyIframe.style.width = '100%';
+          studyIframe.style.height = '100%';
+        }
+      });
+
+      console.log("STUDY MANTRA VIP | Admin: AKASH SINGH | Single column vertical layout, thumbnail above class name");
+    })();
+  </script>
+</body>
+</html>
