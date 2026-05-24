@@ -295,8 +295,8 @@
     }
     @media (max-width: 500px) {
       .back-btn-overlay {
-        padding: 15px 20px;
-        font-size: 1.0rem;
+        padding: 8px 16px;
+        font-size: 0.9rem;
         top: 14px;
         left: 14px;
       }
@@ -309,7 +309,7 @@
   <div id="splashScreen" class="splash">
     <div class="splash-content">
       <h1>📖 STUDY MANTRA</h1>
-      <div class="admin">👨‍🏫 ADMIN :AKASH SINGH</div>
+      <div class="admin">👨‍🏫 ADMIN : AKASH SINGH</div>
       <div style="margin-top: 24px; font-size: 0.8rem; opacity: 0.75;">✨ The VIP Learning Experience</div>
     </div>
   </div>
@@ -317,7 +317,7 @@
   <!-- HOME PAGE : Single Column Vertical Layout (Thumbnail on top, class name below) -->
   <div id="homePage" class="home-page">
     <div class="vip-header">
-      <h1>STUDY MANTRA<span class="vip-badge">✦ ELITE ✦</span></h1>
+      <h1>STUDY MANTRA <span class="vip-badge">✦ ELITE ✦</span></h1>
       <div class="tagline">📚 Choose your class | Interactive Smart Content</div>
     </div>
 
@@ -355,14 +355,26 @@
           <div class="class-stream">Prarambh · Science Plus</div>
         </div>
       </div>
+      
+      <!-- NEW CLASS BOX (EXAMPLE) : Class 12 with demo thumbnail and working URL -->
+      <div class="premium-card" data-url="https://studybeepro.in/nexttopperr/content.html?id=112">
+        <!-- Example thumbnail from free high-quality stock image (study/books themed) -->
+        <img class="card-thumb" src="https://picsum.photos/id/20/600/338" alt="Class 12 Example Thumbnail" loading="lazy">
+        <div class="card-label">
+          <div class="class-name">CLASS 12 · EXAMPLE</div>
+          <div class="class-stream">📘 Demo Content · Sample Material</div>
+        </div>
+      </div>
+      <!-- Note: The above class uses a placeholder image from LoremFlick (picsum) as an example thumbnail.
+           You can replace the image URL and data-url with actual links. -->
     </div>
 
     <!-- PROFESSIONAL VIP FOOTER -->
     <div class="vip-footer">
       <div class="footer-extra">
         <span>🌟 24/7 Access</span>
-        <span>✨✨</span>
-        <span>☎️ akashkumarsinghbth@gmail.com</span>
+        <span>📘 Live Updates</span>
+        <span>🎓 Expert Content</span>
       </div>
       <div class="footer-copyright">
         COPYRIGHT ©️ <strong>AKASH SINGH 2026</strong> | All ambitions served
@@ -414,14 +426,15 @@
         });
       }
 
-      // Attach click event to every class card (vertical layout)
+      // Attach click event to every class card (including the new example one)
       classCards.forEach(card => {
         card.addEventListener('click', (e) => {
           const targetUrl = card.getAttribute('data-url');
-          if (targetUrl) {
+          if (targetUrl && targetUrl !== '#') {
             showFullscreenIframe(targetUrl);
           } else {
-            console.warn("URL missing for class card");
+            console.warn("URL missing or invalid for this class card");
+            // optional: show small alert (silent fail)
           }
         });
         // Accessibility + keyboard support
@@ -434,7 +447,7 @@
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
             const targetUrl = card.getAttribute('data-url');
-            if (targetUrl) showFullscreenIframe(targetUrl);
+            if (targetUrl && targetUrl !== '#') showFullscreenIframe(targetUrl);
           }
         });
       });
@@ -475,7 +488,7 @@
         }
       });
 
-      console.log("STUDY MANTRA VIP | Admin: AKASH SINGH | Single column vertical layout, thumbnail above class name");
+      console.log("STUDY MANTRA VIP | Admin: AKASH SINGH | Single column vertical layout + new example class box");
     })();
   </script>
 </body>
